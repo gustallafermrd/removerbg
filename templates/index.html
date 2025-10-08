@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ByeBg — Remove backgrounds with AI</title>
+  <!-- Tailwind CDN for quick conversion from the Vite setup -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Using inline SVGs instead of external lucide CDN -->
+  <link rel="icon" href="/static/favicon.svg" />
+  </head>
+  <body class="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-slate-100">
+    <div id="app-root">
+      <header class="bg-white/80 backdrop-blur-sm border-b border-slate-200 sticky top-0 z-50 shadow-sm">
+        <div class="container mx-auto px-4 py-4">
+          <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <div class="inline-flex items-center justify-center w-12 h-12 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-xl shadow-md">
+                <!-- user-provided scissors.svg (adapted) -->
+                <svg viewBox="0 0 640 640" class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <path fill="white" d="M256 320L216.5 359.5C203.9 354.6 190.3 352 176 352C114.1 352 64 402.1 64 464C64 525.9 114.1 576 176 576C237.9 576 288 525.9 288 464C288 449.7 285.3 436.1 280.5 423.5L563.2 140.8C570.3 133.7 570.3 122.3 563.2 115.2C534.9 86.9 489.1 86.9 460.8 115.2L320 256L280.5 216.5C285.4 203.9 288 190.3 288 176C288 114.1 237.9 64 176 64C114.1 64 64 114.1 64 176C64 237.9 114.1 288 176 288C190.3 288 203.9 285.3 216.5 280.5L256 320zM353.9 417.9L460.8 524.8C489.1 553.1 534.9 553.1 563.2 524.8C570.3 517.7 570.3 506.3 563.2 499.2L417.9 353.9L353.9 417.9zM128 176C128 149.5 149.5 128 176 128C202.5 128 224 149.5 224 176C224 202.5 202.5 224 176 224C149.5 224 128 202.5 128 176zM176 416C202.5 416 224 437.5 224 464C224 490.5 202.5 512 176 512C149.5 512 128 490.5 128 464C128 437.5 149.5 416 176 416z"/>
+                </svg>
+              </div>
+              <h1 class="text-3xl font-bold bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent">ByeBg</h1>
+            </div>
+            <button id="lang-toggle" class="flex items-center gap-2 px-4 py-2 bg-white text-slate-700 rounded-xl font-medium shadow-md hover:shadow-lg border border-slate-300 hover:border-slate-400 transition-all duration-200" data-i18n="langButton">English</button>
+          </div>
+        </div>
+      </header>
+
+      <main class="container mx-auto px-4 py-12">
+        <div class="max-w-7xl mx-auto">
+          <div class="text-center mb-8">
+            <h2 data-i18n="subtitle" class="text-3xl md:text-4xl font-bold mb-6 bg-gradient-to-r from-blue-600 via-cyan-600 to-blue-700 bg-clip-text text-transparent">Remove backgrounds from your images instantly with AI</h2>
+          </div>
+
+          <div id="card-area" class="bg-white rounded-3xl shadow-xl p-8 border border-slate-200">
+            <div id="upload-card">
+              <div id="drop-area" class="relative border-3 border-dashed rounded-2xl p-16 transition-all duration-200 border-slate-300 bg-slate-50 hover:border-slate-400 hover:bg-slate-100 cursor-pointer">
+                <input id="file-input" type="file" accept="image/*" class="hidden" />
+                <div class="flex flex-col items-center">
+                  <div class="w-20 h-20 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-full flex items-center justify-center mb-6 shadow-lg">
+                    <svg class="text-white w-10 h-10" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M7 10l5-5 5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 5v12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </div>
+                  <p class="text-xl font-semibold text-slate-800 mb-2" data-i18n="dropImage">Drop your image here</p>
+                  <p class="text-slate-500 mb-6" data-i18n="browseText">or click to browse from your computer</p>
+                  <button id="select-btn" class="px-8 py-3 bg-gradient-to-r from-blue-600 to-cyan-600 text-white rounded-xl font-medium shadow-lg hover:shadow-xl hover:from-blue-700 hover:to-cyan-700 transition-all duration-200" data-i18n="selectImage">Select Image</button>
+                </div>
+              </div>
+
+              <div id="error" class="mt-6 p-4 bg-red-50 border border-red-200 rounded-xl text-red-700 text-center hidden"></div>
+            </div>
+
+            <div id="results-card" class="mt-0 hidden">
+              <div class="grid md:grid-cols-2 gap-6 mb-6">
+                <div class="bg-white rounded-3xl shadow-xl p-6 border border-slate-200">
+                  <div class="flex items-center gap-2 mb-4">
+                    <svg class="w-5 h-5 text-slate-600" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2" ry="2" stroke="currentColor" stroke-width="1.5" fill="none"/><path d="M8 14l2.5-3 2.5 3L16 11l3 4H5l3-4z" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+                    <h3 class="font-semibold text-slate-800" data-i18n="original">Original</h3>
+                  </div>
+                  <div class="relative bg-slate-100 rounded-2xl overflow-hidden aspect-square">
+                    <img id="original-img" src="" alt="Original" class="w-full h-full object-contain" />
+                  </div>
+                </div>
+
+                <div class="bg-white rounded-3xl shadow-xl p-6 border border-slate-200">
+                  <div class="flex items-center gap-2 mb-4">
+                    <!-- user-provided scissors.svg adapted to currentColor -->
+                    <svg viewBox="0 0 640 640" class="w-5 h-5 text-blue-600" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                      <path fill="currentColor" d="M256 320L216.5 359.5C203.9 354.6 190.3 352 176 352C114.1 352 64 402.1 64 464C64 525.9 114.1 576 176 576C237.9 576 288 525.9 288 464C288 449.7 285.3 436.1 280.5 423.5L563.2 140.8C570.3 133.7 570.3 122.3 563.2 115.2C534.9 86.9 489.1 86.9 460.8 115.2L320 256L280.5 216.5C285.4 203.9 288 190.3 288 176C288 114.1 237.9 64 176 64C114.1 64 64 114.1 64 176C64 237.9 114.1 288 176 288C190.3 288 203.9 285.3 216.5 280.5L256 320zM353.9 417.9L460.8 524.8C489.1 553.1 534.9 553.1 563.2 524.8C570.3 517.7 570.3 506.3 563.2 499.2L417.9 353.9L353.9 417.9zM128 176C128 149.5 149.5 128 176 128C202.5 128 224 149.5 224 176C224 202.5 202.5 224 176 224C149.5 224 128 202.5 128 176zM176 416C202.5 416 224 437.5 224 464C224 490.5 202.5 512 176 512C149.5 512 128 490.5 128 464C128 437.5 149.5 416 176 416z"/>
+                    </svg>
+                    <h3 class="font-semibold text-slate-800" data-i18n="processed">Processed</h3>
+                  </div>
+                  <div id="processed-wrap" class="relative bg-slate-100 rounded-2xl overflow-hidden aspect-square bg-[linear-gradient(45deg,#f0f0f0_25%,transparent_25%,transparent_75%,#f0f0f0_75%,#f0f0f0),linear-gradient(45deg,#f0f0f0_25%,transparent_25%,transparent_75%,#f0f0f0_75%,#f0f0f0)] bg-[length:20px_20px] bg-[position:0_0,10px_10px]">
+                    <div id="processing" class="flex items-center justify-center h-full hidden">
+                      <div class="text-center">
+                        <svg class="w-12 h-12 text-blue-600 animate-spin mx-auto mb-3" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="25" cy="25" r="20" stroke="currentColor" stroke-width="5" stroke-opacity="0.2" fill="none"/><path d="M45 25a20 20 0 0 0-20-20" stroke="currentColor" stroke-width="5" stroke-linecap="round" fill="none"/></svg>
+                        <p class="text-slate-600 font-medium" data-i18n="processing">Removing background...</p>
+                      </div>
+                    </div>
+                    <img id="processed-img" src="" alt="Processed" class="w-full h-full object-contain hidden" />
+                  </div>
+                </div>
+              </div>
+
+              <div class="flex gap-4 justify-center mt-4">
+                <button id="reset-btn" class="px-8 py-3 bg-white text-slate-700 rounded-xl font-medium shadow-lg hover:shadow-xl border border-slate-300 hover:border-slate-400 transition-all duration-200" data-i18n="uploadNew">Upload New Image</button>
+                <button id="download-btn" class="px-8 py-3 bg-gradient-to-r from-blue-600 to-cyan-600 text-white rounded-xl font-medium shadow-lg hover:shadow-xl hover:from-blue-700 hover:to-cyan-700 transition-all duration-200 hidden" data-i18n="download">Download Image</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="text-center mt-8">
+            <p class="text-slate-500 text-sm" data-i18n="footer">Powered by AI • Fast & Secure • No data stored</p>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script src="/static/app.js"></script>
+  </body>
+</html>
