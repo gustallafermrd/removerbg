@@ -5,6 +5,7 @@ from PIL import Image
 import io
 import base64
 import os
+os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
 
 app = Flask(__name__, static_folder='static', template_folder='templates')
 CORS(app)
