@@ -53,10 +53,10 @@ def health_check():
 
 
 if __name__ == '__main__':
-    HOST = os.environ.get('HOST', '0.0.0.0')
+    HOST = os.environ.get('HOST', '127.0.0.1')
     try:
-        PORT = int(os.environ.get('PORT', 10000))
+        PORT = int(os.environ.get('PORT', 5003))
     except ValueError:
-        PORT = 10000
+        PORT = 5003
     # Use the configured host/port so we can start on a different port if the default is in use
     app.run(debug=True, host=HOST, port=PORT)
