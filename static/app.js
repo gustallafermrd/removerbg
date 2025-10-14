@@ -20,7 +20,7 @@
       termsTitle: "Terms and Conditions of Use",
       termsContent: `
         <p><strong>1. Acceptance of the terms</strong></p>
-        <p>By using this web application to remove image backgrounds ("the App"), you agree to comply with and be bound by these terms and conditions. If you do not agree, please do not use the App.</p>
+        <p>By using this web application to remove image backgrounds FondoCut, you agree to comply with and be bound by these terms and conditions. If you do not agree, please do not use the App.</p>
 
         <p><strong>2. Permitted use</strong></p>
         <p>The App is intended for personal, non-commercial use. It allows users to upload images to remove backgrounds and create PNG files with transparent backgrounds for uses such as stickers for WhatsApp or Instagram.</p>
@@ -64,7 +64,7 @@
       termsTitle: "Términos y Condiciones de Uso",
       termsContent: `
         <p><strong>1. Aceptación de los términos</strong></p>
-        <p>Al utilizar esta aplicación web para remover el fondo de imágenes (“la App”), usted acepta cumplir y estar sujeto a estos términos y condiciones. Si no está de acuerdo con ellos, por favor no use la App.</p>
+        <p>Al utilizar esta aplicación web para remover el fondo de imágenes FondoCut, usted acepta cumplir y estar sujeto a estos términos y condiciones. Si no está de acuerdo con ellos, por favor no use la App.</p>
 
         <p><strong>2. Uso permitido</strong></p>
         <p>La App está diseñada para uso personal, no comercial. Permite a los usuarios subir imágenes para remover fondos y crear archivos PNG con fondo transparente para uso, por ejemplo, en stickers para WhatsApp o Instagram.</p>
