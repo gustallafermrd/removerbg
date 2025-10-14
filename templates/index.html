@@ -91,12 +91,26 @@
           </div>
 
           <div class="text-center mt-8">
-            <p class="text-slate-500 text-sm" data-i18n="footer">Powered by AI • Fast & Secure • No data stored</p>
-          </div>
+            <p class="text-slate-500 text-sm inline" data-i18n="footer">Powered by AI • Fast & Secure • No data stored</p>
+            <span class="mx-2 text-slate-300">•</span>
+            <a href="#" id="terms-link" class="text-slate-500 text-sm underline decoration-dotted" data-i18n="termsLink">Terms &amp; Conditions</a>
+           </div>
         </div>
       </main>
+
+    <!-- Terms & Conditions modal (hidden by default) -->
+    <div id="terms-modal" class="fixed inset-0 z-60 hidden items-center justify-center bg-black/40 p-4">
+      <div class="max-w-3xl w-full bg-white rounded-2xl shadow-xl overflow-hidden">
+        <div class="flex items-center justify-between px-6 py-4 border-b border-slate-100">
+          <h2 id="terms-title" class="text-lg font-semibold"></h2>
+          <button id="terms-close" class="text-slate-500 hover:text-slate-700 rounded-md px-3 py-1">Close</button>
+        </div>
+        <div id="terms-body" class="px-6 py-5 max-h-[70vh] overflow-auto text-sm text-slate-700 leading-relaxed">
+          <!-- populated by app.js -->
+        </div>
+      </div>
     </div>
 
     <script src="/static/app.js"></script>
-  </body>
-</html>
+   </body>
+ </html>
